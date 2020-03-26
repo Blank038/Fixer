@@ -1,0 +1,8 @@
+name: Fixer
+main: com.blank038.fixer.Fixer
+version: 1.0
+depend:
+  - PokemonAPI
+commands:
+  fixer:
+    description: Command for Fixer.
