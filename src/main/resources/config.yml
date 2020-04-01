@@ -4,6 +4,41 @@ message:
   pixelmon:
     # 克隆机
     clone:
-      broken: "&7[&c系统&7] &e损坏!"
-      normal: "&7[&c系统&7] &e正常的克隆机!"
-      error: "&7[&c系统&7] &e请右键克隆机左下角!"
+      # 是否开启
+      enable: true
+      broken: "&c系统 &e损坏!"
+      normal: "&c系统 &e正常的克隆机!"
+      error: "&c系统 &e请右键克隆机左下角!"
+    # 果树催熟
+    apricorn:
+      #是否开启
+      enable: true
+      # 请填入方块名, 如果是任何方块都不允许请填写 all
+      check:
+        - "WHITE_SHULKER_BOX"
+        - "ORANGE_SHULKER_BOX"
+        - "MAGENTA_SHULKER_BOX"
+        - "LIGHT_BLUE_SHULKER_BOX"
+        - "YELLOW_SHULKER_BOX"
+        - "LIME_SHULKER_BOX"
+        - "PINK_SHULKER_BOX"
+        - "GRAY_SHULKER_BOX"
+        - "SILVER_SHULKER_BOX"
+        - "CYAN_SHULKER_BOX"
+        - "PURPLE_SHULKER_BOX"
+        - "BLUE_SHULKER_BOX"
+        - "BROWN_SHULKER_BOX"
+        - "GREEN_SHULKER_BOX"
+        - "RED_SHULKER_BOX"
+        - "BLACK_SHULKER_BOX"
+        - "CHEST"
+      deny: "&c系统提示 &f请将果树上的潜影盒拆下来再进行操作!"
+  # 潘马斯模组
+  pams:
+    machinery:
+      # 是否开启该模块
+      enable: true
+      # 检测的方块列表, 下面只放入一个例子, 请填写方块名
+      check:
+        - "HARVESTCRAFT_WATERFILTER"
+      deny: "&c系统提示 &f有人正在查看界面喔, 无法破坏该方块!"

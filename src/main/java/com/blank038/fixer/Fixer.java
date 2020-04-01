@@ -1,13 +1,17 @@
 package com.blank038.fixer;
 
-import com.blank038.fixer.model.EntityListener;
-import com.blank038.fixer.model.ReforgeListener;
+import com.blank038.fixer.data.CheckList;
+import com.blank038.fixer.model.harvestcraft.PamsListener;
+import com.blank038.fixer.model.minecraft.EntityListener;
+import com.blank038.fixer.model.pixelmon.ReforgeListener;
 import com.mc9y.pokemonapi.PokemonAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This plugin is created for Minecraft-Bukkit related loopholes.
@@ -17,9 +21,14 @@ import java.io.File;
  */
 public class Fixer extends JavaPlugin {
     private static Fixer fixer;
+    private static CheckList checkList;
 
     public static Fixer getInstance() {
         return fixer;
+    }
+
+    public static CheckList getCheckList() {
+        return checkList;
     }
 
     public static FileConfiguration getConfiguration() {
@@ -32,8 +41,13 @@ public class Fixer extends JavaPlugin {
         loadConfig();
         // 注册监听
         Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
+        // 判断是否含有 Pixelmon 模组
         if (PokemonAPI.getInstance().isPixelmon()) {
             Bukkit.getPluginManager().registerEvents(new ReforgeListener(), this);
+        }
+        // 判断是否有潘马斯模组
+        if (PokemonAPI.getInstance().hasClass("com.pam.harvestcraft.HarvestCraft")) {
+            Bukkit.getPluginManager().registerEvents(new PamsListener(), this);
         }
     }
 
@@ -46,5 +60,6 @@ public class Fixer extends JavaPlugin {
             saveDefaultConfig();
         }
         reloadConfig();
+        checkList = new CheckList();
     }
 }

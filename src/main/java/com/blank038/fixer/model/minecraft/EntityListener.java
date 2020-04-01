@@ -1,4 +1,4 @@
-package com.blank038.fixer.model;
+package com.blank038.fixer.model.minecraft;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,4 +18,6 @@ public class EntityListener implements Listener {
             event.setCancelled(true);
         }
     }
+
+
 }
