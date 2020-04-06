@@ -1,6 +1,6 @@
 # 提示文档列表
 message:
-  # 宝可梦相关提示
+  # 宝可梦相关提示+
   pixelmon:
     # 克隆机
     clone:
@@ -42,3 +42,9 @@ message:
       check:
         - "HARVESTCRAFT_WATERFILTER"
       deny: "&c系统提示 &f有人正在查看界面喔, 无法破坏该方块!"
+  # WorldGuard
+  worldguard:
+    # 无视权限放置
+    place:
+      enable: true
+      deny: "&c系统提示 &f请使用主手来放置方块或只有一只手拿着物品!"
