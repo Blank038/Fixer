@@ -1,23 +1,34 @@
 package com.blank038.fixer.model.pixelmon;
 
 import com.blank038.fixer.Fixer;
+import com.mc9y.pokemonapi.api.event.ForgeEvent;
+import com.mc9y.pokemonapi.api.pokemon.PokemonUtil;
+import com.pixelmonmod.pixelmon.Pixelmon;
+import com.pixelmonmod.pixelmon.api.events.HeldItemChangedEvent;
+import com.pixelmonmod.pixelmon.api.events.MegaEvolutionEvent;
+import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.battles.controller.participants.PixelmonWrapper;
 import com.pixelmonmod.pixelmon.blocks.tileEntities.TileEntityCloningMachine;
+import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
+import com.pixelmonmod.pixelmon.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.util.helpers.BlockHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
 
 /**
  * 宝可梦相关内容修复类
@@ -29,7 +40,7 @@ public class ReforgeListener implements Listener {
     /**
      * 修复 Pixelmon 克隆机损坏漏洞
      *
-     * @作者 Laotouy
+     * @author Laotouy
      */
     @EventHandler
     public void onPlayerInteract0(PlayerInteractEvent e) {
@@ -63,7 +74,7 @@ public class ReforgeListener implements Listener {
     /**
      * 防止宝可梦树果催熟
      *
-     * @作者 Blank038
+     * @author Blank038
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -86,10 +97,37 @@ public class ReforgeListener implements Listener {
         }
     }
 
-    private boolean isDenyItem(ItemStack itemStack) {
-        if (itemStack == null || itemStack.getType() == Material.AIR) {
-            return false;
+    /**
+     * 修复合体器复制精灵
+     *
+     * @author Blank038
+     */
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onForge(PlayerInteractEntityEvent e) {
+        if (e.getRightClicked().getType().name().equalsIgnoreCase("PIXELMON_PIXELMON")) {
+            Player player = e.getPlayer();
+            ItemStack itemStack = player.getInventory().getItemInMainHand();
+            if (itemStack != null && itemStack.getType() != Material.AIR) {
+                PlayerPartyStorage storage = Pixelmon.storageManager.getParty(player.getUniqueId());
+                Entity entity = e.getRightClicked();
+                String uuid = entity.getUniqueId().toString();
+                for (int i = 0; i < 6; i++) {
+                    Pokemon pokemon = storage.get(i);
+                    if (pokemon != null && !pokemon.isEgg()) {
+                        EntityPixelmon entityPixelmon = pokemon.getPixelmonIfExists();
+                        if (entityPixelmon != null && entityPixelmon.isEvolving() && uuid.equals(entityPixelmon.getUniqueID().toString())) {
+                            e.setCancelled(true);
+                            player.sendMessage(Fixer.getConfiguration().getString("message.pixelmon.evolving.deny")
+                                    .replace("&", "§"));
+                            break;
+                        }
+                    }
+                }
+            }
         }
-        return true;
+    }
+
+    private boolean isDenyItem(ItemStack itemStack) {
+        return itemStack != null && itemStack.getType() != Material.AIR;
     }
 }

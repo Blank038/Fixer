@@ -33,6 +33,9 @@ message:
         - "BLACK_SHULKER_BOX"
         - "CHEST"
       deny: "&c系统提示 &f请将果树上的潜影盒拆下来再进行操作!"
+    # 进化卸下物品
+    evolving:
+      deny: "&c系统提示 &f进化过程中, 无法使用该道具."
   # 潘马斯模组
   pams:
     machinery:
@@ -48,3 +51,32 @@ message:
     place:
       enable: true
       deny: "&c系统提示 &f请使用主手来放置方块或只有一只手拿着物品!"
+  # Sakura 催熟刷物品
+  sakura:
+    # 催熟刷物品
+    grow:
+      enable: true
+      # 检测的对象列表
+      list:
+        - "SAKURA_BAMBOO_SHOOT"
+        - "SAKURA_BAMBOO"
+      # 校对的容器列表
+      check:
+        - "WHITE_SHULKER_BOX"
+        - "ORANGE_SHULKER_BOX"
+        - "MAGENTA_SHULKER_BOX"
+        - "LIGHT_BLUE_SHULKER_BOX"
+        - "YELLOW_SHULKER_BOX"
+        - "LIME_SHULKER_BOX"
+        - "PINK_SHULKER_BOX"
+        - "GRAY_SHULKER_BOX"
+        - "SILVER_SHULKER_BOX"
+        - "CYAN_SHULKER_BOX"
+        - "PURPLE_SHULKER_BOX"
+        - "BLUE_SHULKER_BOX"
+        - "BROWN_SHULKER_BOX"
+        - "GREEN_SHULKER_BOX"
+        - "RED_SHULKER_BOX"
+        - "BLACK_SHULKER_BOX"
+        - "CHEST"
+      deny: "&c系统提示 &f请将催熟对象上的方块拆下来再进行操作!"

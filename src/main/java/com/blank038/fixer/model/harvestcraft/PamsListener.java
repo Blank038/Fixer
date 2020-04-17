@@ -34,7 +34,7 @@ public class PamsListener implements Listener {
             Block block = event.getClickedBlock();
             Player player = event.getPlayer();
             Location location = block.getLocation();
-            if (block != null && Fixer.getCheckList().machineryList.contains(block.getType().name())) {
+            if (Fixer.getCheckList().machineryList.contains(block.getType().name())) {
                 if (guis.containsKey(location)) {
                     if (!guis.get(location).contains(player.getName())) {
                         guis.get(location).add(player.getName());

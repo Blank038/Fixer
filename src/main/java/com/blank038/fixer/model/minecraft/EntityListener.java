@@ -18,6 +18,4 @@ public class EntityListener implements Listener {
             event.setCancelled(true);
         }
     }
-
-
 }

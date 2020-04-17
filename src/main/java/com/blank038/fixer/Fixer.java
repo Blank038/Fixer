@@ -2,6 +2,7 @@ package com.blank038.fixer;
 
 import com.blank038.fixer.data.CheckList;
 import com.blank038.fixer.model.harvestcraft.PamsListener;
+import com.blank038.fixer.model.sakura.SakuraListener;
 import com.blank038.fixer.model.worldguard.BlockListener;
 import com.blank038.fixer.model.minecraft.EntityListener;
 import com.blank038.fixer.model.pixelmon.ReforgeListener;
@@ -48,6 +49,11 @@ public class Fixer extends JavaPlugin {
         if (PokemonAPI.getInstance().hasClass("com.pam.harvestcraft.HarvestCraft")) {
             Bukkit.getPluginManager().registerEvents(new PamsListener(), this);
         }
+        // 判断是否有 Sakura 模组
+        if (PokemonAPI.getInstance().hasClass("cn.mcmod.sakura.SakuraMain")) {
+            Bukkit.getPluginManager().registerEvents(new SakuraListener(), this);
+        }
+        // 判断是否加载了 WorldGuard 插件
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
             Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
         }
