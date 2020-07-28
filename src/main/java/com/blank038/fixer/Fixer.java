@@ -1,5 +1,6 @@
 package com.blank038.fixer;
 
+import com.blank038.fixer.command.FixerCommander;
 import com.blank038.fixer.data.CheckList;
 import com.blank038.fixer.model.harvestcraft.PamsListener;
 import com.blank038.fixer.model.sakura.SakuraListener;
@@ -17,7 +18,7 @@ import java.io.File;
  * This plugin is created for Minecraft-Bukkit related loopholes.
  * You can use this plugin in version 1.12.2+.
  *
- * @Author Blank038, Laotouy
+ * @author Blank038, Laotouy
  */
 public class Fixer extends JavaPlugin {
     private static Fixer fixer;
@@ -57,16 +58,12 @@ public class Fixer extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
             Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
         }
+        getCommand("fixer").setExecutor(new FixerCommander());
     }
 
     public void loadConfig() {
-        File file = new File(getDataFolder(), "config.yml");
-        if (!getDataFolder().exists()) {
-            getDataFolder().mkdir();
-        }
-        if (!file.exists()) {
-            saveDefaultConfig();
-        }
+        getDataFolder().mkdir();
+        saveDefaultConfig();
         reloadConfig();
         checkList = new CheckList();
     }

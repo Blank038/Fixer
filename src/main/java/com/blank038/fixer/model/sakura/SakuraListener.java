@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,7 +32,13 @@ public class SakuraListener implements Listener {
                     Player player = event.getPlayer();
                     if (isDenyItem(player.getInventory().getItemInMainHand()) || isDenyItem(player.getInventory().getItemInOffHand())) {
                         event.setCancelled(true);
-                        player.sendMessage(Fixer.getConfiguration().getString("message.sakura.grow.deny")
+                        if (Fixer.getConfiguration().getBoolean("message.sakura.grow.break")) {
+                            BlockBreakEvent e = new BlockBreakEvent(top, player);
+                            if (e.isCancelled()) {
+                                return;
+                            }
+                            top.breakNaturally();
+                        } else player.sendMessage(Fixer.getConfiguration().getString("message.sakura.grow.deny")
                                 .replace("&", "§"));
                     }
                 }

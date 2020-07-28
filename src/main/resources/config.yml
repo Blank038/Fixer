@@ -13,6 +13,8 @@ message:
     apricorn:
       #是否开启
       enable: true
+      # 是否直接掉落
+      break: true
       # 请填入方块名, 如果是任何方块都不允许请填写 all
       check:
         - "WHITE_SHULKER_BOX"
@@ -36,6 +38,17 @@ message:
     # 进化卸下物品
     evolving:
       deny: "&c系统提示 &f进化过程中, 无法使用该道具."
+    # 精灵 UUID 相同
+    repeat-uuid:
+      # 是否开启该模块
+      enable: true
+      # 检测间隔, 单位: 秒, 修改后需重启生效
+      delay: 60
+      deny: "&c系统提示 &f背包中出现重复UUID精灵, 已移除其中一只."
+    # 技能复制携带物品
+    skill-copy-item:
+      # 是否开启该模块
+      enable: true
   # 潘马斯模组
   pams:
     machinery:
@@ -60,6 +73,8 @@ message:
       list:
         - "SAKURA_BAMBOO_SHOOT"
         - "SAKURA_BAMBOO"
+      # 是否直接掉落
+      break: true
       # 校对的容器列表
       check:
         - "WHITE_SHULKER_BOX"

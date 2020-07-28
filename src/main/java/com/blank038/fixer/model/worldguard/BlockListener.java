@@ -20,13 +20,16 @@ public class BlockListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         if (Fixer.getConfiguration().getBoolean("message.worldguard.place.enable")) {
             Player player = event.getPlayer();
-            ItemStack mainHand = player.getInventory().getItemInMainHand();
+            ItemStack mainHand = player.getInventory().getItemInMainHand(), offhand = player.getInventory().getItemInOffHand();
             ItemStack hand = event.getItemInHand();
             if ((mainHand != null && mainHand.getType() != Material.AIR) && !mainHand.isSimilar(hand)) {
                 event.setCancelled(true);
                 player.sendMessage(Fixer.getConfiguration().getString("message.worldguard.place.deny")
                         .replace("&", "§"));
             }
+//            if (event.getBlock().getLocation().getWorld().getName().equals("spawn-1")) {
+//                System.out.println(event.canBuild());
+//            }
         }
     }
 }
