@@ -2,6 +2,7 @@ package com.blank038.fixer;
 
 import com.blank038.fixer.command.FixerCommander;
 import com.blank038.fixer.data.CheckList;
+import com.blank038.fixer.model.armourers.ArmourersListener;
 import com.blank038.fixer.model.harvestcraft.PamsListener;
 import com.blank038.fixer.model.sakura.SakuraListener;
 import com.blank038.fixer.model.worldguard.BlockListener;
@@ -11,8 +12,6 @@ import com.mc9y.pokemonapi.PokemonAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 /**
  * This plugin is created for Minecraft-Bukkit related loopholes.
@@ -53,6 +52,10 @@ public class Fixer extends JavaPlugin {
         // 判断是否有 Sakura 模组
         if (PokemonAPI.getInstance().hasClass("cn.mcmod.sakura.SakuraMain")) {
             Bukkit.getPluginManager().registerEvents(new SakuraListener(), this);
+        }
+        // 判断是否加载了时装模组
+        if (PokemonAPI.getInstance().hasClass("moe.plushie.armourers_workshop.ArmourersWorkshop")) {
+            Bukkit.getPluginManager().registerEvents(new ArmourersListener(), this);
         }
         // 判断是否加载了 WorldGuard 插件
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {

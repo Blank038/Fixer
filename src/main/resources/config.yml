@@ -49,6 +49,10 @@ message:
     skill-copy-item:
       # 是否开启该模块
       enable: true
+    # 幽灵系精灵不掉落物品
+    ghost_drop:
+      # 是否开启该模块
+      enable: true
   # 潘马斯模组
   pams:
     machinery:
@@ -95,3 +99,9 @@ message:
         - "BLACK_SHULKER_BOX"
         - "CHEST"
       deny: "&c系统提示 &f请将催熟对象上的方块拆下来再进行操作!"
+  # 时装模组
+  armourers:
+    # 无视权限无限放置时装方块
+    place:
+      # 是否开启该模块
+      enable: true

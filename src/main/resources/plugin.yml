@@ -1,6 +1,6 @@
 name: Fixer
 main: com.blank038.fixer.Fixer
-version: 1.2.1
+version: ${version}
 depend:
   - PokemonAPI
 softdepend:

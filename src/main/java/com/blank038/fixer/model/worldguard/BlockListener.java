@@ -27,9 +27,6 @@ public class BlockListener implements Listener {
                 player.sendMessage(Fixer.getConfiguration().getString("message.worldguard.place.deny")
                         .replace("&", "§"));
             }
-//            if (event.getBlock().getLocation().getWorld().getName().equals("spawn-1")) {
-//                System.out.println(event.canBuild());
-//            }
         }
     }
 }

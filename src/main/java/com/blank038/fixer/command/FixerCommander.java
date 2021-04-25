@@ -5,6 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+/**
+ * @author Blank038
+ */
 public class FixerCommander implements CommandExecutor {
 
     @Override
