@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.2.2-SNAPSHOT"
+version = "1.2.3-SNAPSHOT"
 group = "com.blank038.fixer"
 archivesBaseName = "Fixer"
 
