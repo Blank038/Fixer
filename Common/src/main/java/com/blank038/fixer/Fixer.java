@@ -4,15 +4,14 @@ import com.blank038.fixer.command.FixerCommander;
 import com.blank038.fixer.data.CheckList;
 import com.blank038.fixer.model.armourers.ArmourersListener;
 import com.blank038.fixer.model.harvestcraft.PamsListener;
-import com.blank038.fixer.model.pixelmon.NewReforgedListener;
 import com.blank038.fixer.model.sakura.SakuraListener;
 import com.blank038.fixer.model.worldguard.BlockListener;
 import com.blank038.fixer.model.minecraft.EntityListener;
-import com.blank038.fixer.model.pixelmon.ReforgedListener;
 import com.mc9y.blank038api.Blank038API;
 import com.mc9y.pokemonapi.api.enums.EnumPixelmon;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -47,10 +46,12 @@ public class Fixer extends JavaPlugin {
         EnumPixelmon pixelmon = EnumPixelmon.PIXELMON_REFORGED;
         if (Blank038API.getPokemonAPI().getEnumPixelmon() == pixelmon) {
             int versionId = Integer.parseInt(Blank038API.getPokemonAPI().getVersion(pixelmon).replace(".", ""));
-            if (versionId >= 820) {
-                Bukkit.getPluginManager().registerEvents(new NewReforgedListener(), this);
-            } else {
-                Bukkit.getPluginManager().registerEvents(new ReforgedListener(), this);
+            try {
+                Class<?> aClass = Class.forName("com.blank038.fixer.model.pixelmon." + (versionId >= 820 ? "NewReforgedListener" : "ReforgedListener"));
+                Listener listener = (Listener) aClass.newInstance();
+                Bukkit.getPluginManager().registerEvents(listener, this);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
         // 判断是否有潘马斯模组

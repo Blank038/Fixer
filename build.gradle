@@ -9,39 +9,48 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.2.3-SNAPSHOT"
-group = "com.blank038.fixer"
-archivesBaseName = "Fixer"
 
-sourceCompatibility = targetCompatibility = '1.8'
-compileJava {
+project(":Common") {
+    minecraft {
+        version = "1.12.2-14.23.5.2807"
+        runDir = "run"
+        mappings = "snapshot_20171003"
+    }
+
     sourceCompatibility = targetCompatibility = '1.8'
-}
-
-minecraft {
-    version = "1.12.2-14.23.5.2807"
-    runDir = "run"
-    mappings = "snapshot_20171003"
-}
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    from(sourceSets.main.resources.srcDirs) {
-        include 'plugin.yml'
-
-        expand 'version':project.version, 'name':project.name
+    compileJava {
+        sourceCompatibility = targetCompatibility = '1.8'
     }
 
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'plugin.yml'
+    processResources {
+        inputs.property "version", project.version
+
+        from(sourceSets.main.resources.srcDirs) {
+            include 'plugin.yml'
+
+            expand 'version': project.version, 'name': project.name
+        }
+
+        from(sourceSets.main.resources.srcDirs) {
+            exclude 'plugin.yml'
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+allprojects {
+    version = "1.2.3-SNAPSHOT"
+    group = "com.blank038.fixer"
+    archivesBaseName = "Fixer"
+
+    apply plugin: 'net.minecraftforge.gradle.forge'
+
+    minecraft {
+        version = "1.12.2-14.23.5.2807"
+        runDir = "run"
+        mappings = "snapshot_20171003"
+    }
 }
