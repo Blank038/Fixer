@@ -58,7 +58,7 @@ public class Fixer extends JavaPlugin {
         if (Blank038API.getPokemonAPI().hasClass("com.pam.harvestcraft.HarvestCraft")) {
             Bukkit.getPluginManager().registerEvents(new PamsListener(), this);
         }
-        // 判断是否有 Sakura 模组
+        // 判断是否有 Sakura 模组-
         if (Blank038API.getPokemonAPI().hasClass("cn.mcmod.sakura.SakuraMain")) {
             Bukkit.getPluginManager().registerEvents(new SakuraListener(), this);
         }
