@@ -51,7 +51,12 @@ message:
       enable: true
     # 幽灵系精灵不掉落物品
     ghost_drop:
-      # 是否开启该模块
+      # 是否开启该模块, 高于 8.2.0 不会启用, 因为 8.2.0 已修复此问题
+      enable: true
+    # 剑盾切换形态属性及种族值不变
+    form_stats:
+      # 是否开启该模块, 如果未来 PixelmonReforged 模组修复了该问题, 请关闭本模块
+      # 本模块改动需重启服务器来重置模块
       enable: true
   # 潘马斯模组
   pams:
