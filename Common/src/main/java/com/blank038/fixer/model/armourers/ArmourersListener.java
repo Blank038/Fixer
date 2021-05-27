@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -23,7 +24,7 @@ public class ArmourersListener implements Listener {
     /**
      * 修复时装模组无视权限无限放置方块
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!Fixer.getConfiguration().getBoolean("message.armourers.place.enable")
                 || event.isCancelled() || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
@@ -37,7 +38,7 @@ public class ArmourersListener implements Listener {
         NBTTagCompound nbtTagCompound = nmsItem.hasTag() ? nmsItem.getTag() : new NBTTagCompound();
         assert (nbtTagCompound != null);
         if (nbtTagCompound.hasKey("armourersWorkshop") && (nbtTagCompound.getCompound("armourersWorkshop")).hasKey("identifier")
-                && "armourers:block".equals(nbtTagCompound.getCompound("identifier").getString("skinType"))) {
+                && "armourers:block".equals(nbtTagCompound.getCompound("armourersWorkshop").getCompound("identifier").getString("skinType"))) {
             Block block = event.getClickedBlock();
             BlockPlaceEvent e = new BlockPlaceEvent(block, block.getState(), block, itemStack, event.getPlayer(),
                     true, event.getPlayer().getPlayer().getMainHand() == MainHand.LEFT ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND);
