@@ -1,0 +1,4 @@
+rootProject.name = 'Fixer'
+
+include 'PixelmonReforged_812', 'NewPixelmonReforged', 'Common'
+
