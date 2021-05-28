@@ -13,11 +13,11 @@ import com.pixelmonmod.pixelmon.enums.EnumType;
 import com.pixelmonmod.pixelmon.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.util.helpers.BlockHelper;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.DimensionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -102,26 +102,23 @@ public class ReforgedListener implements Listener {
     public void onPlayerInteract0(PlayerInteractEvent e) {
         if (e.hasBlock() && "PIXELMON_CLONING_MACHINE".equalsIgnoreCase(e.getClickedBlock().getType().toString()) && Fixer.getConfiguration().getBoolean("message.pixelmon.clone.enable")) {
             org.bukkit.block.Block bk = e.getClickedBlock();
-            for (WorldServer worldServer : FMLCommonHandler.instance().getMinecraftServerInstance().worlds) {
-                if (worldServer.getWorldInfo().getWorldName().equalsIgnoreCase(e.getPlayer().getWorld().getName())) {
-                    TileEntityCloningMachine tile = BlockHelper.getTileEntity(TileEntityCloningMachine.class, worldServer, new BlockPos(bk.getX(), bk.getY(), bk.getZ()));
-                    try {
-                        boolean b = tile.isBroken;
-                        if (b) {
-                            e.setCancelled(true);
-                            e.getPlayer().sendMessage(Fixer.getConfiguration().getString("message.pixelmon.clone.broken")
-                                    .replace("&", "§"));
-                        } else {
-                            e.getPlayer().sendMessage(Fixer.getConfiguration().getString("message.pixelmon.clone.normal")
-                                    .replace("&", "§"));
-                        }
-                    } catch (NullPointerException ex) {
-                        e.setCancelled(true);
-                        e.getPlayer().sendMessage(Fixer.getConfiguration().getString("message.pixelmon.clone.error")
-                                .replace("&", "§"));
-                    }
-                    break;
+            net.minecraft.server.v1_12_R1.WorldServer world = ((CraftWorld) bk.getWorld()).getHandle();
+            TileEntityCloningMachine tile = BlockHelper.getTileEntity(TileEntityCloningMachine.class,
+                    DimensionManager.getWorld(world.dimension), new BlockPos(bk.getX(), bk.getY(), bk.getZ()));
+            try {
+                boolean b = tile.isBroken;
+                if (b) {
+                    e.setCancelled(true);
+                    e.getPlayer().sendMessage(Fixer.getConfiguration().getString("message.pixelmon.clone.broken")
+                            .replace("&", "§"));
+                } else {
+                    e.getPlayer().sendMessage(Fixer.getConfiguration().getString("message.pixelmon.clone.normal")
+                            .replace("&", "§"));
                 }
+            } catch (NullPointerException ex) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(Fixer.getConfiguration().getString("message.pixelmon.clone.error")
+                        .replace("&", "§"));
             }
         }
     }
