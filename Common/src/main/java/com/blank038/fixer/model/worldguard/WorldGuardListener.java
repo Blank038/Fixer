@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Blank038
  */
-public class BlockListener implements Listener {
+public class WorldGuardListener implements Listener {
 
     /**
      * 修复 WorldGuard 无视权限放置方块
@@ -20,7 +20,7 @@ public class BlockListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         if (Fixer.getConfiguration().getBoolean("message.worldguard.place.enable")) {
             Player player = event.getPlayer();
-            ItemStack mainHand = player.getInventory().getItemInMainHand(), offhand = player.getInventory().getItemInOffHand();
+            ItemStack mainHand = player.getInventory().getItemInMainHand();
             ItemStack hand = event.getItemInHand();
             if ((mainHand != null && mainHand.getType() != Material.AIR) && !mainHand.isSimilar(hand)) {
                 event.setCancelled(true);

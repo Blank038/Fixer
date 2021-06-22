@@ -10,11 +10,14 @@ import java.util.List;
  * @date 2021-04-03
  */
 public class CheckList {
-    public final List<String> apricornList, machineryList, sakuraGrowList;
+    public final List<String> apricornList, machineryList, sakuraGrowList,
+            leftClickLimit, rightCLickLimit;
 
     public CheckList() {
-        apricornList = new ArrayList<>(Fixer.getConfiguration().getStringList("message.pixelmon.apricorn.check"));
-        machineryList = new ArrayList<>(Fixer.getConfiguration().getStringList("message.pams.machinery.check"));
-        sakuraGrowList = new ArrayList<>(Fixer.getConfiguration().getStringList("message.sakura.grow.check"));
+        this.apricornList = Fixer.getConfiguration().getStringList("message.pixelmon.apricorn.check");
+        this.machineryList = Fixer.getConfiguration().getStringList("message.pams.machinery.check");
+        this.sakuraGrowList = Fixer.getConfiguration().getStringList("message.sakura.grow.check");
+        this.leftClickLimit = Fixer.getConfiguration().getStringList("message.common.interact_limit.left_click");
+        this.rightCLickLimit = Fixer.getConfiguration().getStringList("message.common.interact_limit.right_click");
     }
 }

@@ -4,9 +4,9 @@ import com.blank038.fixer.command.FixerCommander;
 import com.blank038.fixer.data.CheckList;
 import com.blank038.fixer.model.armourers.ArmourersListener;
 import com.blank038.fixer.model.harvestcraft.PamsListener;
+import com.blank038.fixer.model.minecraft.BlockListener;
 import com.blank038.fixer.model.sakura.SakuraListener;
-import com.blank038.fixer.model.worldguard.BlockListener;
-import com.blank038.fixer.model.minecraft.EntityListener;
+import com.blank038.fixer.model.worldguard.WorldGuardListener;
 import com.mc9y.blank038api.Blank038API;
 import com.mc9y.pokemonapi.api.enums.EnumPixelmon;
 import org.bukkit.Bukkit;
@@ -41,7 +41,7 @@ public class Fixer extends JavaPlugin {
         fixer = this;
         loadConfig();
         // 注册监听
-        Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
+        Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
         // 判断是否含有 Pixelmon 模组
         EnumPixelmon pixelmon = EnumPixelmon.PIXELMON_REFORGED;
         if (Blank038API.getPokemonAPI().getEnumPixelmon() == pixelmon) {
@@ -54,6 +54,8 @@ public class Fixer extends JavaPlugin {
                 e.printStackTrace();
             }
         }
+        // 注册通用设定
+        Bukkit.getPluginManager().registerEvents(new WorldGuardListener(), this);
         // 判断是否有潘马斯模组
         if (Blank038API.getPokemonAPI().hasClass("com.pam.harvestcraft.HarvestCraft")) {
             Bukkit.getPluginManager().registerEvents(new PamsListener(), this);
@@ -68,7 +70,7 @@ public class Fixer extends JavaPlugin {
         }
         // 判断是否加载了 WorldGuard 插件
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
-            Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
+            Bukkit.getPluginManager().registerEvents(new WorldGuardListener(), this);
         }
         super.getCommand("fixer").setExecutor(new FixerCommander());
     }

@@ -1,5 +1,16 @@
 # 提示文档列表
 message:
+  # 通用类型
+  common:
+    # 交互限制, 限制某些方块必须创造模式下才允许交互
+    interact_limit:
+      left_click:
+        - "PIXELMON_POKE_CHEST"
+        - "PIXELMON_ULTRA_CHEST"
+        - "PIXELMON_BEAST_CHEST"
+        - "PIXELMON_MASTER_CHEST"
+      right_click: [ ]
+      notify: "&c系统提示 &f你不能这样子做."
   # 宝可梦相关提示+
   pixelmon:
     # 克隆机

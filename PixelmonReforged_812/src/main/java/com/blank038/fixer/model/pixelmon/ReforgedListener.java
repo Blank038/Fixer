@@ -96,11 +96,12 @@ public class ReforgedListener implements Listener {
     /**
      * 修复 Pixelmon 克隆机损坏漏洞
      *
-     * @author Laotouy
+     * @author Laotouy, Blank038
      */
     @EventHandler
     public void onPlayerInteract0(PlayerInteractEvent e) {
-        if (e.hasBlock() && "PIXELMON_CLONING_MACHINE".equalsIgnoreCase(e.getClickedBlock().getType().toString()) && Fixer.getConfiguration().getBoolean("message.pixelmon.clone.enable")) {
+        if (e.hasBlock() && "PIXELMON_CLONING_MACHINE".equalsIgnoreCase(e.getClickedBlock().getType().toString())
+                && Fixer.getConfiguration().getBoolean("message.pixelmon.clone.enable")) {
             org.bukkit.block.Block bk = e.getClickedBlock();
             net.minecraft.server.v1_12_R1.WorldServer world = ((CraftWorld) bk.getWorld()).getHandle();
             TileEntityCloningMachine tile = BlockHelper.getTileEntity(TileEntityCloningMachine.class,
