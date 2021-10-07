@@ -29,10 +29,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 宝可梦相关内容修复类
@@ -98,7 +95,7 @@ public class ReforgedListener implements Listener {
      *
      * @author Laotouy, Blank038
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract0(PlayerInteractEvent e) {
         if (e.hasBlock() && "PIXELMON_CLONING_MACHINE".equalsIgnoreCase(e.getClickedBlock().getType().toString())
                 && Fixer.getConfiguration().getBoolean("message.pixelmon.clone.enable")) {
@@ -107,8 +104,7 @@ public class ReforgedListener implements Listener {
             TileEntityCloningMachine tile = BlockHelper.getTileEntity(TileEntityCloningMachine.class,
                     DimensionManager.getWorld(world.dimension), new BlockPos(bk.getX(), bk.getY(), bk.getZ()));
             try {
-                boolean b = tile.isBroken;
-                if (b) {
+                if (tile.isBroken) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage(Fixer.getConfiguration().getString("message.pixelmon.clone.broken")
                             .replace("&", "§"));

@@ -3,10 +3,14 @@ package com.blank038.fixer.model.pixelmon;
 import com.blank038.fixer.Fixer;
 import com.blank038.fixer.model.pixelmon.stats.FixStatsEnum;
 import com.mc9y.pokemonapi.api.event.ForgeEvent;
+import com.pixelmonmod.pixelmon.Pixelmon;
+import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
 import com.pixelmonmod.pixelmon.api.events.battles.AttackEvent;
+import com.pixelmonmod.pixelmon.api.events.battles.CatchComboEvent;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.BaseStats;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.BaseStatsLoader;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.StatsType;
+import com.pixelmonmod.pixelmon.storage.PlayerPartyStorage;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -57,6 +61,10 @@ public class NewReforgedListener extends ReforgedListener implements Listener {
                     BATTLE_CONTROLLER_MAP.put(e.target.getPokemonUUID().toString(), e.target.bc);
                 }
             }
+        } else if (event.getForgeEvent() instanceof CaptureEvent.StartCapture && Fixer.getConfiguration().getBoolean("message.pixelmon.combo.enable")) {
+            CaptureEvent.StartCapture e = (CaptureEvent.StartCapture) event.getForgeEvent();
+            PlayerPartyStorage storage = Pixelmon.storageManager.getParty(e.player);
+            storage.transientData.captureCombo.clearCombo();
         }
     }
 }

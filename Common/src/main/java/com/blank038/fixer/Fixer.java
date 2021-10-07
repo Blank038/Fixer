@@ -5,6 +5,7 @@ import com.blank038.fixer.data.CheckList;
 import com.blank038.fixer.model.armourers.ArmourersListener;
 import com.blank038.fixer.model.harvestcraft.PamsListener;
 import com.blank038.fixer.model.minecraft.BlockListener;
+import com.blank038.fixer.model.multiverse.CommandListener;
 import com.blank038.fixer.model.sakura.SakuraListener;
 import com.blank038.fixer.model.worldguard.WorldGuardListener;
 import com.mc9y.blank038api.Blank038API;
@@ -71,6 +72,10 @@ public class Fixer extends JavaPlugin {
         // 判断是否加载了 WorldGuard 插件
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
             Bukkit.getPluginManager().registerEvents(new WorldGuardListener(), this);
+        }
+        // 判断是否加载了 Multiverse-Core 插件
+        if (Bukkit.getPluginManager().getPlugin("Multiverse-Core") != null) {
+            Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
         }
         super.getCommand("fixer").setExecutor(new FixerCommander());
     }

@@ -69,6 +69,10 @@ message:
       # 是否开启该模块, 如果未来 PixelmonReforged 模组修复了该问题, 请关闭本模块
       # 本模块改动需重启服务器来重置模块
       enable: true
+    # 捕捉连击
+    combo:
+      # 是否开启该模块
+      enable: true
   # 潘马斯模组
   pams:
     machinery:
