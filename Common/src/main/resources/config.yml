@@ -73,6 +73,14 @@ message:
     combo:
       # 是否开启该模块
       enable: true
+    # 修复卡进化, 等级达标但是没进化
+    evolution:
+      # 是否开启该模块
+      enable: true
+    # 是否禁止精灵能进入载具
+    vehicle:
+      # 是否开启该模块
+      enable: true
   # 潘马斯模组
   pams:
     machinery:

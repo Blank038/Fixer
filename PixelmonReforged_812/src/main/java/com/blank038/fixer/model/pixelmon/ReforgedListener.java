@@ -4,12 +4,15 @@ import com.blank038.fixer.Fixer;
 import com.mc9y.pokemonapi.api.event.ForgeEvent;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.events.BeatWildPixelmonEvent;
+import com.pixelmonmod.pixelmon.api.events.LevelUpEvent;
 import com.pixelmonmod.pixelmon.api.events.battles.AttackEvents;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.battles.controller.BattleControllerBase;
 import com.pixelmonmod.pixelmon.blocks.tileEntities.TileEntityCloningMachine;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
+import com.pixelmonmod.pixelmon.entities.pixelmon.stats.evolution.types.LevelingEvolution;
 import com.pixelmonmod.pixelmon.enums.EnumType;
+import com.pixelmonmod.pixelmon.enums.heldItems.EnumHeldItems;
 import com.pixelmonmod.pixelmon.storage.PlayerPartyStorage;
 import com.pixelmonmod.pixelmon.util.helpers.BlockHelper;
 import net.minecraft.util.math.BlockPos;
@@ -27,6 +30,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -150,6 +154,21 @@ public class ReforgedListener implements Listener {
                     entity.dropNormalItems(e.player);
                 }
             }
+        } else if (event.getForgeEvent() instanceof LevelUpEvent && Fixer.getConfiguration().getBoolean("message.pixelmon.evolution.enable")) {
+            LevelUpEvent e = (LevelUpEvent) event.getForgeEvent();
+            if ((e.pokemon.getHeldItem() == null || e.pokemon.getHeldItem().getHeldItemType() != EnumHeldItems.everStone)
+                    && !e.pokemon.getPokemon().getEvolutions(LevelingEvolution.class).isEmpty()) {
+                EntityPixelmon pixelmon = e.pokemon.getPokemon().getOrSpawnPixelmon(e.pokemon.getPlayerOwner());
+                for (LevelingEvolution evolution : e.pokemon.getPokemon().getEvolutions(LevelingEvolution.class)) {
+                    if (evolution.canEvolve(pixelmon, e.newLevel)) {
+                        e.setCanceled(true);
+                        if (evolution.doEvolution(pixelmon)) {
+                            pixelmon.getPokemonData().getLevelContainer().setLevel(e.newLevel);
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -214,6 +233,14 @@ public class ReforgedListener implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onRide(VehicleEnterEvent event) {
+        if ("PIXELMON_PIXELMON".equals(event.getEntered().getType().name())
+                && Fixer.getConfiguration().getBoolean("message.pixelmon.vehicle.enable")) {
+            event.setCancelled(true);
         }
     }
 

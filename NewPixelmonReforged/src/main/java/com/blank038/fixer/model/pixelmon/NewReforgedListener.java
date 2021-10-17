@@ -5,11 +5,14 @@ import com.blank038.fixer.model.pixelmon.stats.FixStatsEnum;
 import com.mc9y.pokemonapi.api.event.ForgeEvent;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
+import com.pixelmonmod.pixelmon.api.events.LevelUpEvent;
 import com.pixelmonmod.pixelmon.api.events.battles.AttackEvent;
-import com.pixelmonmod.pixelmon.api.events.battles.CatchComboEvent;
+import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.BaseStats;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.BaseStatsLoader;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.StatsType;
+import com.pixelmonmod.pixelmon.entities.pixelmon.stats.evolution.types.LevelingEvolution;
+import com.pixelmonmod.pixelmon.enums.heldItems.EnumHeldItems;
 import com.pixelmonmod.pixelmon.storage.PlayerPartyStorage;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -65,6 +68,21 @@ public class NewReforgedListener extends ReforgedListener implements Listener {
             CaptureEvent.StartCapture e = (CaptureEvent.StartCapture) event.getForgeEvent();
             PlayerPartyStorage storage = Pixelmon.storageManager.getParty(e.player);
             storage.transientData.captureCombo.clearCombo();
+        } else if (event.getForgeEvent() instanceof LevelUpEvent && Fixer.getConfiguration().getBoolean("message.pixelmon.evolution.enable")) {
+            LevelUpEvent e = (LevelUpEvent) event.getForgeEvent();
+            if ((e.pokemon.getHeldItem() == null || e.pokemon.getHeldItem().getHeldItemType() != EnumHeldItems.everStone)
+                    && !e.pokemon.getPokemon().getEvolutions(LevelingEvolution.class).isEmpty()) {
+                EntityPixelmon pixelmon = e.pokemon.getPokemon().getOrSpawnPixelmon(e.pokemon.getPlayerOwner());
+                for (LevelingEvolution evolution : e.pokemon.getPokemon().getEvolutions(LevelingEvolution.class)) {
+                    if (evolution.canEvolve(pixelmon, e.newLevel)) {
+                        e.setCanceled(true);
+                        if (evolution.doEvolution(pixelmon)) {
+                            pixelmon.getPokemonData().getLevelContainer().setLevel(e.newLevel);
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
