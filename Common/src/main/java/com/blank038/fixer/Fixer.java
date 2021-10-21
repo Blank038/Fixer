@@ -7,6 +7,7 @@ import com.blank038.fixer.model.harvestcraft.PamsListener;
 import com.blank038.fixer.model.minecraft.BlockListener;
 import com.blank038.fixer.model.multiverse.CommandListener;
 import com.blank038.fixer.model.sakura.SakuraListener;
+import com.blank038.fixer.model.slimefun.InventoryListener;
 import com.blank038.fixer.model.worldguard.WorldGuardListener;
 import com.mc9y.blank038api.Blank038API;
 import com.mc9y.pokemonapi.api.enums.EnumPixelmon;
@@ -76,6 +77,10 @@ public class Fixer extends JavaPlugin {
         // 判断是否加载了 Multiverse-Core 插件
         if (Bukkit.getPluginManager().getPlugin("Multiverse-Core") != null) {
             Bukkit.getPluginManager().registerEvents(new CommandListener(), this);
+        }
+        // 判断是否加载了 Slimefun 插件
+        if (Bukkit.getPluginManager().getPlugin("Slimefun") != null) {
+            Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         }
         super.getCommand("fixer").setExecutor(new FixerCommander());
     }

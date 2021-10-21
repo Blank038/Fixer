@@ -5,6 +5,7 @@ depend:
   - PokemonAPI
 softdepend:
   - WorldGuard
+  - Slimefun
 commands:
   fixer:
     description: Command for Fixer.

@@ -20,7 +20,7 @@ allprojects {
         mappings = "snapshot_20171003"
     }
 
-    version = "1.4.3-RC"
+    version = "1.5.1-RC"
     group = "com.blank038.fixer"
     archivesBaseName = "Fixer"
 

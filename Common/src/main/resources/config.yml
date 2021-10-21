@@ -141,3 +141,12 @@ message:
     place:
       # 是否开启该模块
       enable: true
+  # 粘液科技
+  slimefun:
+    # 方块放置器
+    block_placer:
+      # 是否开启该模块
+      enable: true
+      # 检测标题
+      checks:
+        - "&a方块放置器"
