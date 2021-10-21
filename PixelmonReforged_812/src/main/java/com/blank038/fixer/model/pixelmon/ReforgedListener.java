@@ -7,8 +7,12 @@ import com.pixelmonmod.pixelmon.api.events.BeatWildPixelmonEvent;
 import com.pixelmonmod.pixelmon.api.events.LevelUpEvent;
 import com.pixelmonmod.pixelmon.api.events.battles.AttackEvents;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.api.storage.PCStorage;
+import com.pixelmonmod.pixelmon.api.storage.StoragePosition;
 import com.pixelmonmod.pixelmon.battles.controller.BattleControllerBase;
 import com.pixelmonmod.pixelmon.blocks.tileEntities.TileEntityCloningMachine;
+import com.pixelmonmod.pixelmon.blocks.tileEntities.TileEntityRanchBlock;
+import com.pixelmonmod.pixelmon.config.PixelmonConfig;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.evolution.types.LevelingEvolution;
 import com.pixelmonmod.pixelmon.enums.EnumType;
@@ -20,7 +24,9 @@ import net.minecraftforge.common.DimensionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +37,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -236,11 +243,55 @@ public class ReforgedListener implements Listener {
         }
     }
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    public void onInteract(PlayerInteractEvent event) {
+        if (Fixer.getConfiguration().getBoolean("message.pixelmon.incense_click.enable")) {
+            if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+                    && event.getItem() != null && event.getItem().getType().name().endsWith("_INCENSE")) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
     @EventHandler
     public void onRide(VehicleEnterEvent event) {
         if ("PIXELMON_PIXELMON".equals(event.getEntered().getType().name())
                 && Fixer.getConfiguration().getBoolean("message.pixelmon.vehicle.enable")) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onChunLoad(ChunkLoadEvent event) {
+        if (Fixer.getConfiguration().getBoolean("message.pixelmon.ranch_pc_out_of.enable")) {
+            BlockState[] states = event.getChunk().getTileEntities();
+            for (BlockState state : states) {
+                if ("PIXELMON_RANCH".equals(state.getType().name())) {
+                    CraftBlockState blockState = (CraftBlockState) state;
+                    TileEntityRanchBlock ranchBlock = (TileEntityRanchBlock) (Object) blockState.getTileEntity();
+                    if (ranchBlock.isRanchOwnerInGame() && !ranchBlock.getPokemonData().isEmpty()) {
+                        PCStorage pcStorage = Pixelmon.storageManager.getPCForPlayer(ranchBlock.getOwnerUUID());
+                        Iterator<TileEntityRanchBlock.RanchPoke> iterator = ranchBlock.getPokemonData().iterator();
+                        while (iterator.hasNext()) {
+                            TileEntityRanchBlock.RanchPoke v = iterator.next();
+                            if (v.pos.box >= PixelmonConfig.computerBoxes) {
+                                StoragePosition pos = pcStorage.getFirstEmptyPosition();
+                                v.pos.box = pos.box;
+                                v.pos.order = pos.order;
+                                // 设置精灵当前位置
+                                Arrays.stream(pcStorage.getAll()).forEach((pokemon) -> {
+                                    if (pokemon != null && pokemon.isInRanch() && pokemon.getUUID().equals(v.uuid)) {
+                                        pokemon.setStorage(pcStorage, pos);
+                                        pokemon.setInRanch(false);
+                                    }
+                                });
+                                // 设置移除状态
+                                ranchBlock.getPokemonData().remove(v);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

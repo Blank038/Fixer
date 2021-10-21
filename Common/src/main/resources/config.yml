@@ -81,6 +81,14 @@ message:
     vehicle:
       # 是否开启该模块
       enable: true
+    # 禁止手持熏香交互（避免某种操作崩服）
+    incense_click:
+      # 是否启用该模块
+      enable: true
+    # PC页码不匹配
+    ranch_pc_out_of:
+      # 是否启用该模块
+      enable: true
   # 潘马斯模组
   pams:
     machinery:
