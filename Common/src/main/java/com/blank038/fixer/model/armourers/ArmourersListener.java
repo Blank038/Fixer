@@ -4,6 +4,7 @@ import com.blank038.fixer.Fixer;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,8 +41,10 @@ public class ArmourersListener implements Listener {
         if (nbtTagCompound.hasKey("armourersWorkshop") && (nbtTagCompound.getCompound("armourersWorkshop")).hasKey("identifier")
                 && "armourers:block".equals(nbtTagCompound.getCompound("armourersWorkshop").getCompound("identifier").getString("skinType"))) {
             Block block = event.getClickedBlock();
-            BlockPlaceEvent e = new BlockPlaceEvent(block, block.getState(), block, itemStack, event.getPlayer(),
-                    true, event.getPlayer().getPlayer().getMainHand() == MainHand.LEFT ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND);
+            BlockFace face = event.getBlockFace();
+            BlockPlaceEvent e = new BlockPlaceEvent(block.getLocation().clone().add(face.getModX(), face.getModY(), face.getModZ()).getBlock(),
+                    block.getState(), block, itemStack, event.getPlayer(), true,
+                    event.getPlayer().getPlayer().getMainHand() == MainHand.LEFT ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND);
             Bukkit.getPluginManager().callEvent(e);
             if (e.isCancelled()) {
                 event.setCancelled(true);

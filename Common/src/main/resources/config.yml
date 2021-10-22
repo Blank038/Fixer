@@ -77,6 +77,9 @@ message:
     evolution:
       # 是否开启该模块
       enable: true
+      # 是否进化同时赋予新等级
+      # 8.3.0 及以下则开启, 8.3.1及以上推荐关闭
+      new_level: false
     # 是否禁止精灵能进入载具
     vehicle:
       # 是否开启该模块

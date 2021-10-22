@@ -76,7 +76,7 @@ public class NewReforgedListener extends ReforgedListener implements Listener {
                 for (LevelingEvolution evolution : e.pokemon.getPokemon().getEvolutions(LevelingEvolution.class)) {
                     if (evolution.canEvolve(pixelmon, e.newLevel)) {
                         e.setCanceled(true);
-                        if (evolution.doEvolution(pixelmon)) {
+                        if (evolution.doEvolution(pixelmon) && Fixer.getConfiguration().getBoolean("message.pixelmon.evolution.new_level")) {
                             pixelmon.getPokemonData().getLevelContainer().setLevel(e.newLevel);
                             break;
                         }
