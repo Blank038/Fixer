@@ -3,6 +3,7 @@ package com.blank038.fixer;
 import com.blank038.fixer.command.FixerCommander;
 import com.blank038.fixer.data.CheckList;
 import com.blank038.fixer.model.armourers.ArmourersListener;
+import com.blank038.fixer.model.crasher.CrasherPacket;
 import com.blank038.fixer.model.harvestcraft.PamsListener;
 import com.blank038.fixer.model.minecraft.BlockListener;
 import com.blank038.fixer.model.multiverse.CommandListener;
@@ -82,13 +83,15 @@ public class Fixer extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("Slimefun") != null) {
             Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         }
+        // 加载防止 CrasherServer 卡服崩服模块
+        new CrasherPacket();
         super.getCommand("fixer").setExecutor(new FixerCommander());
     }
 
     public void loadConfig() {
-        getDataFolder().mkdir();
-        saveDefaultConfig();
-        reloadConfig();
+        this.getDataFolder().mkdir();
+        this.saveDefaultConfig();
+        this.reloadConfig();
         checkList = new CheckList();
     }
 }

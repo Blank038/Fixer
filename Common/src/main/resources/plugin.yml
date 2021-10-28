@@ -6,6 +6,8 @@ depend:
 softdepend:
   - WorldGuard
   - Slimefun
+  - ProtocolLib
+  - PacketListenerApi
 commands:
   fixer:
     description: Command for Fixer.

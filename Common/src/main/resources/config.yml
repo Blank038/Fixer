@@ -153,3 +153,9 @@ message:
       # 检测标题
       checks:
         - "&a方块放置器"
+  # CrasherServer, 此模块需要 PacketListenerApi 插件作为依赖
+  crash_server:
+    enable: true
+    block_dig: 15
+    tab_complete: 6
+    kick: "&c系统提示 &c非法数据包."
