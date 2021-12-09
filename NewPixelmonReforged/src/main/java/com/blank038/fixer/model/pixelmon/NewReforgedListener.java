@@ -1,6 +1,6 @@
 package com.blank038.fixer.model.pixelmon;
 
-import com.blank038.fixer.Fixer;
+import com.blank038.fixer.bukkit.Fixer;
 import com.blank038.fixer.model.pixelmon.stats.FixStatsEnum;
 import com.mc9y.pokemonapi.api.event.ForgeEvent;
 import com.pixelmonmod.pixelmon.Pixelmon;

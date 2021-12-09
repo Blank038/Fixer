@@ -1,6 +1,6 @@
 package com.blank038.fixer.model.pixelmon;
 
-import com.blank038.fixer.Fixer;
+import com.blank038.fixer.bukkit.Fixer;
 import com.mc9y.pokemonapi.api.event.ForgeEvent;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.events.BeatWildPixelmonEvent;
@@ -37,6 +37,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
+
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 

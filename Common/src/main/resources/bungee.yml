@@ -1,0 +1,3 @@
+name: Fixer
+main: com.blank038.fixer.bungee.FixerBungee
+version: ${version}
