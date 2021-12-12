@@ -1,8 +1,8 @@
 package com.blank038.fixer.bukkit;
 
-import com.blank038.fixer.bukkit.model.log4j.Log4jBukkitModel;
-import com.blank038.fixer.bungee.command.FixerCommander;
-import com.blank038.fixer.bungee.data.CheckList;
+import com.blank038.fixer.bukkit.model.log4j2.Log4j2BukkitModel;
+import com.blank038.fixer.bukkit.command.FixerCommand;
+import com.blank038.fixer.bukkit.data.CheckList;
 import com.blank038.fixer.bukkit.model.armourers.ArmourersListener;
 import com.blank038.fixer.bukkit.model.crasher.CrasherPacket;
 import com.blank038.fixer.bukkit.model.harvestcraft.PamsListener;
@@ -28,6 +28,8 @@ public class Fixer extends JavaPlugin {
     private static Fixer fixer;
     private static CheckList checkList;
 
+    private Log4j2BukkitModel log4J2BukkitModel;
+
     public static Fixer getInstance() {
         return fixer;
     }
@@ -41,6 +43,14 @@ public class Fixer extends JavaPlugin {
     }
 
     @Override
+    public void onLoad() {
+        // 加载 log4j 修复模块
+        if (Blank038API.getPokemonAPI().hasClass("org.apache.logging.log4j.core.filter.AbstractFilter")) {
+            log4J2BukkitModel = new Log4j2BukkitModel();
+        }
+    }
+
+    @Override
     public void onEnable() {
         fixer = this;
         loadConfig();
@@ -51,7 +61,7 @@ public class Fixer extends JavaPlugin {
         if (Blank038API.getPokemonAPI().getEnumPixelmon() == pixelmon) {
             int versionId = Integer.parseInt(Blank038API.getPokemonAPI().getVersion(pixelmon).replace(".", ""));
             try {
-                Class<?> aClass = Class.forName("com.blank038.fixer.model.pixelmon." + (versionId >= 820 ? "NewReforgedListener" : "ReforgedListener"));
+                Class<?> aClass = Class.forName("com.blank038.fixer.bukkit.model.pixelmon." + (versionId >= 820 ? "NewReforgedListener" : "ReforgedListener"));
                 Listener listener = (Listener) aClass.newInstance();
                 Bukkit.getPluginManager().registerEvents(listener, this);
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -84,13 +94,12 @@ public class Fixer extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("Slimefun") != null) {
             Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         }
+        if (this.log4J2BukkitModel != null) {
+            Bukkit.getPluginManager().registerEvents(this.log4J2BukkitModel, this);
+        }
         // 加载防止 CrasherServer 卡服崩服模块
         new CrasherPacket();
-        // 加载 log4j 修复模块
-        if (Blank038API.getPokemonAPI().hasClass("org.apache.logging.log4j.core.filter.AbstractFilter")) {
-            new Log4jBukkitModel();
-        }
-        super.getCommand("fixer").setExecutor(new FixerCommander());
+        super.getCommand("fixer").setExecutor(new FixerCommand());
     }
 
     public void loadConfig() {

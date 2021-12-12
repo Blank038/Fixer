@@ -1,6 +1,7 @@
 name: Fixer
 main: com.blank038.fixer.bukkit.Fixer
 version: ${version}
+load: STARTUP
 depend:
   - PokemonAPI
 softdepend:

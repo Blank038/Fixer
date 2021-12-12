@@ -16,10 +16,10 @@ import java.util.regex.Pattern;
  * @author Blank038
  * @since 2021-12-10
  */
-public class Log4jModel extends AbstractFilter {
+public class Log4j2Model extends AbstractFilter {
     protected final static Pattern PATTERN = Pattern.compile(".*\\$\\{jndi:.*}.*");
 
-    public Log4jModel() {
+    public Log4j2Model() {
         Logger logger = (org.apache.logging.log4j.core.Logger) LogManager.getRootLogger();
         logger.addFilter(this);
     }
@@ -44,11 +44,15 @@ public class Log4jModel extends AbstractFilter {
         return event != null ? validateMessage(event.getMessage()) : Result.NEUTRAL;
     }
 
-    private static Result validateMessage(Message message) {
+    public static Result validateMessage(Message message) {
         return message == null ? Result.NEUTRAL : validateMessage(message.getFormattedMessage());
     }
 
-    private static Result validateMessage(String message) {
+    public static Result validateMessage(String message) {
         return PATTERN.matcher(message).find() ? Result.DENY : Result.NEUTRAL;
+    }
+
+    public static boolean match(String message) {
+        return PATTERN.matcher(message).find();
     }
 }

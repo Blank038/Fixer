@@ -1,0 +1,14 @@
+[
+{
+  "modid": "fixermod",
+  "name": "FixerMod",
+  "description": "fix bugs.",
+  "version": "${version}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Blank038"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

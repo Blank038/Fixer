@@ -1,11 +1,8 @@
-package com.blank038.fixer.bukkit.model.log4j;
+package com.blank038.fixer.bukkit.model.log4j2;
 
 
-import com.blank038.fixer.bukkit.Fixer;
-import com.blank038.fixer.model.log4j.Log4jModel;
-import org.bukkit.Bukkit;
+import com.blank038.fixer.model.log4j.Log4j2Model;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -16,14 +13,10 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  * @author Blank038
  * @since 2021-12-10
  */
-public class Log4jBukkitModel extends Log4jModel
+public class Log4j2BukkitModel extends Log4j2Model
         implements Listener {
 
-    public Log4jBukkitModel() {
-        Bukkit.getPluginManager().registerEvents(this, Fixer.getInstance());
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         if (PATTERN.matcher(event.getMessage()).find()) {
             event.setCancelled(true);

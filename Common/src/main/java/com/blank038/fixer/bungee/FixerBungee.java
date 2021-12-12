@@ -1,6 +1,6 @@
 package com.blank038.fixer.bungee;
 
-import com.blank038.fixer.model.log4j.Log4jModel;
+import com.blank038.fixer.model.log4j.Log4j2Model;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
@@ -13,7 +13,7 @@ public class FixerBungee extends Plugin {
     public void onEnable() {
         try {
             Class.forName("org.apache.logging.log4j.core.filter.AbstractFilter");
-            new Log4jModel();
+            new Log4j2Model();
         } catch (Exception ignored) {
         }
     }

@@ -1,4 +1,4 @@
-package com.blank038.fixer.bungee.command;
+package com.blank038.fixer.bukkit.command;
 
 import com.blank038.fixer.bukkit.Fixer;
 import org.bukkit.command.Command;
@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author Blank038
  */
-public class FixerCommander implements CommandExecutor {
+public class FixerCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {

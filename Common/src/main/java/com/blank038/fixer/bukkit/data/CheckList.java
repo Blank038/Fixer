@@ -1,4 +1,4 @@
-package com.blank038.fixer.bungee.data;
+package com.blank038.fixer.bukkit.data;
 
 import com.blank038.fixer.bukkit.Fixer;
 

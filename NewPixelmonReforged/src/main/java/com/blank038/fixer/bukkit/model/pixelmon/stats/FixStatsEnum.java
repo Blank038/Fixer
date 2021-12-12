@@ -1,4 +1,4 @@
-package com.blank038.fixer.model.pixelmon.stats;
+package com.blank038.fixer.bukkit.model.pixelmon.stats;
 
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.pixelmonmod.pixelmon.enums.EnumType;

@@ -1,4 +1,4 @@
-package com.blank038.fixer.model.pixelmon;
+package com.blank038.fixer.bukkit.model.pixelmon;
 
 import com.blank038.fixer.bukkit.Fixer;
 import com.mc9y.pokemonapi.api.event.ForgeEvent;
