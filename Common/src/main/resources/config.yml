@@ -11,6 +11,8 @@ message:
         - "PIXELMON_MASTER_CHEST"
       right_click: [ ]
       notify: "&c系统提示 &f你不能这样子做."
+    fake_proxy:
+      notify: "\n禁止绕BC进入服务器."
   # 宝可梦相关提示+
   pixelmon:
     # 克隆机

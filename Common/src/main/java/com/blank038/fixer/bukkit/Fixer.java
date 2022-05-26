@@ -7,6 +7,7 @@ import com.blank038.fixer.bukkit.model.armourers.ArmourersListener;
 import com.blank038.fixer.bukkit.model.crasher.CrasherPacket;
 import com.blank038.fixer.bukkit.model.harvestcraft.PamsListener;
 import com.blank038.fixer.bukkit.model.minecraft.BlockListener;
+import com.blank038.fixer.bukkit.model.minecraft.FakeBungeeCord;
 import com.blank038.fixer.bukkit.model.multiverse.CommandListener;
 import com.blank038.fixer.bukkit.model.sakura.SakuraListener;
 import com.blank038.fixer.bukkit.model.slimefun.InventoryListener;
@@ -70,6 +71,7 @@ public class Fixer extends JavaPlugin {
         }
         // 注册通用设定
         Bukkit.getPluginManager().registerEvents(new WorldGuardListener(), this);
+        Bukkit.getPluginManager().registerEvents(new FakeBungeeCord(), this);
         // 判断是否有潘马斯模组
         if (Blank038API.getPokemonAPI().hasClass("com.pam.harvestcraft.HarvestCraft")) {
             Bukkit.getPluginManager().registerEvents(new PamsListener(), this);
