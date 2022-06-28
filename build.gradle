@@ -20,10 +20,19 @@ allprojects {
         mappings = "snapshot_20171003"
     }
 
-    version = "1.6.9-SNAPSHOT"
+    version = "1.6.10-SNAPSHOT"
     group = "com.blank038.fixer"
     archivesBaseName = "Fixer"
 
+    repositories {
+        maven {
+            url = "https://repo.mc9y.com/snapshots"
+        }
+    }
+
+    dependencies {
+        implementation("com.aystudio.core:AyCore:1.0.3-BETA")
+    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"

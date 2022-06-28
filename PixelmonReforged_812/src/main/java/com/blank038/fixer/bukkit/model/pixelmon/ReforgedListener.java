@@ -1,7 +1,7 @@
 package com.blank038.fixer.bukkit.model.pixelmon;
 
+import com.aystudio.core.forge.event.ForgeEvent;
 import com.blank038.fixer.bukkit.Fixer;
-import com.mc9y.pokemonapi.api.event.ForgeEvent;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.events.BeatWildPixelmonEvent;
 import com.pixelmonmod.pixelmon.api.events.LevelUpEvent;
